@@ -105,15 +105,19 @@ void reconnect()
       {
         Serial.println("connected");
         // Once connected, publish an announcement...
-        if(boot == true)
-        {
-          client.publish(USER_MQTT_CLIENT_NAME"/checkIn","Rebooted");
-          boot = false;
-        }
         if(boot == false)
         {
           client.publish(USER_MQTT_CLIENT_NAME"/checkIn","Reconnected"); 
+          Serial.println("checkIn - Reconnected");
         }
+        
+        if(boot == true)
+        {
+          client.publish(USER_MQTT_CLIENT_NAME"/checkIn","Rebooted");
+          Serial.println("checkIn - Rebooted");
+          boot = false;
+        }
+        
         client.subscribe(USER_MQTT_CLIENT_NAME"/message");
         client.subscribe(USER_MQTT_CLIENT_NAME"/command");
       } 
